@@ -1,0 +1,16 @@
+The following configuration converges to stable behavior
+
+NAMES = 'a b c d e'.split()
+ARRIVAL_RATES = dict(zip(NAMES, [100, 200, 75, 300, 30]))
+SERVICE_TIMES = dict(zip(NAMES, [1, 1, 2, 1, 10]))
+
+TOTAL_SERVERS = 1070
+TIME_STEPS = 100
+
+DECREASE_COEF = 0.9
+INCREASE_CONST = 1
+
+STARTING_SHARES = 1
+
+But lowering TOTAL_SERVERS to 1050 causes it diverge instead.
+This illustrates the need for a good scheduling algorithm.
