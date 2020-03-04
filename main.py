@@ -88,12 +88,18 @@ def adjustServers(servers, shares):
 
     # Bound the total server count to TOTAL_SERVERS
     attempt = 0
+    stagnantTries = 0
     while sum(proposedServerCounts.values()) > TOTAL_SERVERS:
         name = NAMES[attempt % len(NAMES)]
         serverDelta = proposedServerCounts[name] - len(servers[name])
         minimumPossible = len(servers[name]) - killable[name]
         if proposedServerCounts[name] - minimumPossible > 0:
             proposedServerCounts[name] -= 1
+            stagnantTries = 0
+        else:
+            stagnantTries += 1
+        if stagnantTries == (len(NAMES)+1):
+            break
 
     # Adjust the actual server counts
     for name, propCount in proposedServerCounts.items():
